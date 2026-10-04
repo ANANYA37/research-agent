@@ -1,0 +1,21 @@
+backend/.env
+backend/data/*.sqlite3
+backend/data/*.sqlite3-*
+backend/data/*.db
+backend/__pycache__/
+backend/**/*.pyc
+frontend/node_modules/
+frontend/dist/
+.chrome-tmp/
+
+# Local credentials, research data, and runtime files
+backend/data/research_history.json
+.env
+.env.*
+!.env.example
+!.env.*.example
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.log

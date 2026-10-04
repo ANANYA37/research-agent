@@ -1,0 +1,91 @@
+﻿Create a high-resolution, beautifully typeset ENTITY RELATIONSHIP DIAGRAM image of the actual ResearchAgent database. Title "ResearchAgent — Database Structure". Subtitle "8 application tables · SQLAlchemy models · SQLite by default". White background, navy typography, blue headers for accounts/report tables, teal headers for organization tables, violet headers for watchlist tables. Professional technical documentation, crisp readable column names and types in aligned rows. Landscape large canvas approximately 3:2. Prioritize exact schema text, spacious table cards, clear relationships routed through gutters without obscuring rows. No invented fields or tables.
+
+Render EXACTLY these 8 table cards, each once. PK and FK markers in a narrow first column, field then type. Use varchar abbreviated as str(N), int, text, datetime, float, json. Use ? only for nullable columns.
+
+users:
+PK id str(36)
+UQ email str(320)
+password_hash str(256)
+created_at datetime
+
+research_history:
+PK id str(36)
+FK user_id str(36)
+topic text
+normalized_topic text
+depth int
+created_at datetime
+updated_at datetime
+report text
+sources json
+queries_used json
+iterations_completed int
+topic_embedding json
+citation_verification json
+Constraint in footer: "UNIQUE(user_id, normalized_topic, depth)"
+
+collections:
+PK id str(36)
+FK user_id str(36)
+name str(80)
+description str(240)
+created_at datetime
+Footer "UNIQUE(user_id, name)"
+
+tags:
+PK id str(36)
+FK user_id str(36)
+name str(48)
+color str(7)
+Footer "UNIQUE(user_id, name)"
+
+report_collections:
+PK,FK report_id str(36)
+PK,FK collection_id str(36)
+Footer "Composite primary key"
+
+report_tags:
+PK,FK report_id str(36)
+PK,FK tag_id str(36)
+Footer "Composite primary key"
+
+watchlists:
+PK id str(36)
+FK user_id str(36)
+REF report_id str(36)
+topic text
+depth int
+frequency str(12)
+paused int
+unread int
+next_check float
+last_check float
+REF active_run_id str(36)?
+created_at float
+Footer "UNIQUE(user_id, report_id)"
+
+watchlist_runs:
+PK id str(36)
+FK watchlist_id str(36)
+status str(12)
+created_at float
+finished_at float?
+result json
+changes json
+error text
+
+Layout suggestion: users top center, research_history prominent center-left, watchlists center-right and watchlist_runs underneath it. Organization tables/join tables left and below report table. Plan spacious placement before drawing lines.
+
+Draw solid foreign-key connectors with labels "1" on parent and "0..N" on child for EXACTLY these relationships:
+users.id to research_history.user_id
+users.id to collections.user_id
+users.id to tags.user_id
+users.id to watchlists.user_id
+research_history.id to report_collections.report_id
+collections.id to report_collections.collection_id
+research_history.id to report_tags.report_id
+tags.id to report_tags.tag_id
+watchlists.id to watchlist_runs.watchlist_id
+Route user ownership connections on outer edges if needed to reduce crossings.
+Draw just ONE dashed logical connector between watchlists.report_id and research_history.id, labelled "Application reference (no FK)". Do NOT label watchlists.report_id as FK. Do NOT add solid link from active_run_id to watchlist_runs; REF row and note suffice.
+Bottom legend: "PK primary key · FK foreign key · UQ unique · REF application reference · ? nullable". Notes: "Solid lines: declared foreign keys (ON DELETE CASCADE)." "Dashed line: logical reference only. active_run_id also has no FK." "Watchlist timestamps are Unix seconds; other timestamps use datetime." Show JSON as embedded columns, NOT additional source or embedding tables. No Redis table, no chat table, no migrations table. This is the declared application schema, not a claim about live database constraint enforcement. All eight tables must be included and legible.

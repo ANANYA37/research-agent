@@ -1,0 +1,47 @@
+/* Shared navigation, independent of page-specific styles. */
+.workspace-header {
+  --header-bg: #131e19; --header-ink: #e3ebe3; --header-muted: #a4b6a8;
+  --header-border: #2b3e32; --header-active: #233c2e; --header-accent: #bfdbad;
+  position: sticky; top: 0; z-index: 100; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center; gap: 24px; min-height: 77px; padding: 14px 30px;
+  background: var(--header-bg); color: var(--header-ink); border-bottom: 1px solid var(--header-border);
+}
+[data-theme="light"] .workspace-header {
+  --header-bg: #fbfaf7; --header-ink: #243c32; --header-muted: #667569;
+  --header-border: #dedfd6; --header-active: #e5edde; --header-accent: #315a40;
+}
+.workspace-brand { display: inline-flex; align-items: center; gap: 11px; color: var(--header-ink); width: fit-content; min-width: 0; }
+.workspace-brand:hover { color: var(--header-ink); }
+.workspace-brand-symbol { flex-shrink: 0; display: grid; place-items: center; width: 39px; height: 39px; border-radius: 12px; border: 1px solid var(--header-border); background: var(--header-active); color: var(--header-accent); }
+.workspace-brand-copy { display: grid; gap: 3px; }
+.workspace-brand-name { font: 400 1.35rem/1.1 Georgia, 'Times New Roman', serif; letter-spacing: -.055em; }
+.workspace-brand-name > span { color: var(--header-accent); }
+.workspace-brand-caption { font-size: .49rem; font-weight: 500; letter-spacing: .17em; color: var(--header-muted); }
+.workspace-navigation { display: flex; align-items: center; gap: 4px; padding: 4px; border: 1px solid var(--header-border); border-radius: 12px; }
+.workspace-nav-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 34px; padding: 7px 15px; border-radius: 8px; font-size: .76rem; font-weight: 500; color: var(--header-muted); transition: color 150ms, background 150ms; }
+.workspace-nav-link:hover { background: var(--header-active); color: var(--header-ink); }
+.workspace-nav-link.is-current { background: var(--header-active); color: var(--header-accent); }
+.workspace-header-tools { display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
+.workspace-header-tools .theme-toggle-btn, .workspace-signout { display: grid; place-items: center; width: 34px; height: 34px; color: var(--header-muted); border: 1px solid transparent; background: transparent; border-radius: 9px; cursor: pointer; }
+.workspace-header-tools .theme-toggle-btn:hover, .workspace-signout:hover { color: var(--header-accent); background: var(--header-active); }
+.workspace-header-divider { height: 22px; width: 1px; background: var(--header-border); margin: 0 4px; }
+.workspace-account-avatar { display: grid; place-items: center; width: 33px; height: 33px; border-radius: 50%; color: var(--header-accent); background: var(--header-active); border: 1px solid var(--header-border); font: 500 .8rem/1 var(--font-family); }
+.workspace-account-avatar:hover { color: var(--header-ink); border-color: var(--header-accent); }
+.workspace-header :where(a, button):focus-visible { outline: 2px solid var(--header-accent); outline-offset: 4px; }
+@media (max-width: 850px) {
+  .workspace-header { gap: 14px; padding-inline: 20px; }
+  .workspace-brand-caption { display: none; }
+  .workspace-brand-name { font-size: 1.2rem; }
+  .workspace-nav-link { padding-inline: 10px; }
+  .workspace-header-tools { gap: 5px; }
+}
+@media (max-width: 760px) {
+  .workspace-header { position: relative; grid-template-columns: 1fr auto; gap: 13px; padding: 14px 18px; }
+  .workspace-navigation { grid-row: 2; grid-column: 1 / -1; justify-content: center; }
+  .workspace-navigation a { flex: 1; }
+  .workspace-header-tools { grid-column: 2; grid-row: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .workspace-nav-link { transition: none; } }
+
+.workspace-unread { display:inline-grid; place-items:center; min-width:17px; height:17px; padding:0 4px; border-radius:20px; background:var(--header-accent); color:var(--header-bg); font-size:.6rem; }
+@media(max-width:420px) { .workspace-navigation { gap:0; }.workspace-nav-link { gap:4px; padding-inline:6px; font-size:.69rem; } }
